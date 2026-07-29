@@ -1,6 +1,6 @@
 {
-  "versionCode": 2,
+  "versionCode": 101,
   "versionName": "1.1",
   "apkUrl": "depthwallpaper.apk",
-  "changelog": "Sperrbildschirm und Hauptbildschirm laufen jetzt beide als Live Wallpaper - die Uhr bleibt nicht mehr stehen. Beide Bildschirme werden getrennt festgelegt."
+  "changelog": "Bestehende Update-Dateien uebernehmen"
 }
