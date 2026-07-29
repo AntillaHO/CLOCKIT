@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.DepthWP" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/accent_primary</item>
+        <item name="colorOnPrimary">@color/accent_on_primary</item>
+        <item name="colorPrimaryContainer">@color/accent_deep</item>
+        <item name="colorOnPrimaryContainer">@color/accent_on_primary</item>
+        <item name="colorSecondary">@color/accent_bright</item>
+        <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorSurfaceVariant">@color/surface_dark_variant</item>
+        <item name="colorOutline">@color/outline_strong</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/background_dark</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="materialAlertDialogTheme">@style/Theme.DepthWP.Dialog</item>
+    </style>
+
+    <style name="Theme.DepthWP.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/surface_elevated</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.DepthWP.Dialog</item>
+    </style>
+
+    <style name="ShapeAppearance.DepthWP.Dialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+</resources>

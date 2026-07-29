@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <com.example.depthwp.view.WallpaperPreviewView
+        android:id="@+id/preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Gradient scrim so the top chrome stays legible over bright photos -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_gravity="top"
+        android:background="@drawable/bg_scrim_top" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="vertical"
+        android:paddingTop="44dp">
+
+        <!-- Row 1: back + preset name -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_round_icon_button"
+                android:contentDescription="@string/action_back"
+                android:padding="10dp"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:id="@+id/preset_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:shadowColor="#CC000000"
+                android:shadowDy="1"
+                android:shadowRadius="5"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btn_lock_gestures"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_round_icon_button"
+                android:contentDescription="@string/action_lock_gestures"
+                android:padding="10dp"
+                android:src="@drawable/ic_lock_open" />
+        </LinearLayout>
+
+        <!-- Row 2: which screen am I editing -->
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/screen_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_glass_pill"
+            android:padding="4dp"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tab_lock"
+                style="@style/SegmentButton"
+                android:text="@string/tab_lock_screen"
+                app:cornerRadius="100dp"
+                app:icon="@drawable/ic_lock"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tab_home"
+                style="@style/SegmentButton"
+                android:text="@string/tab_home_screen"
+                app:cornerRadius="100dp"
+                app:icon="@drawable/ic_home"
+                app:strokeWidth="0dp" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+            android:id="@+id/text_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_hint_pill"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="6dp"
+            android:text="@string/hint_tap_to_edit"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- ===================== Bottom sheet ===================== -->
+    <LinearLayout
+        android:id="@+id/panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/bg_bottom_panel"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="20dp">
+
+        <!-- Drag handle: bigger touch target than it looks -->
+        <FrameLayout
+            android:id="@+id/panel_handle"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <View
+                android:layout_width="42dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_drag_handle" />
+        </FrameLayout>
+
+        <!-- Element selector -->
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/target_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_segment_container"
+            android:padding="4dp"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tab_time"
+                style="@style/SegmentButton"
+                android:text="@string/tab_time"
+                app:cornerRadius="100dp"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tab_date"
+                style="@style/SegmentButton"
+                android:text="@string/tab_date"
+                app:cornerRadius="100dp"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tab_object"
+                style="@style/SegmentButton"
+                android:text="@string/tab_object"
+                app:cornerRadius="100dp"
+                app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tab_background"
+                style="@style/SegmentButton"
+                android:text="@string/tab_background"
+                app:cornerRadius="100dp"
+                app:strokeWidth="0dp" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <!-- Collapsible body -->
+        <com.example.depthwp.view.MaxHeightScrollView
+            android:id="@+id/panel_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/panel_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                android:paddingTop="4dp">
+
+                <!-- ===== TEXT (time or date) ===== -->
+                <LinearLayout
+                    android:id="@+id/content_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="46dp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView style="@style/GroupHeader" android:text="@string/group_font" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/font_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp" />
+                    </HorizontalScrollView>
+
+                    <TextView style="@style/GroupHeader" android:text="@string/group_layout" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_size" />
+                        <TextView android:id="@+id/value_size" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_size"
+                        style="@style/CtrlSlider"
+                        android:value="50"
+                        android:valueFrom="0"
+                        android:valueTo="100" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_stretch_x" />
+                        <TextView android:id="@+id/value_scale_x" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_scale_x"
+                        style="@style/CtrlSlider"
+                        android:value="20"
+                        android:valueFrom="0"
+                        android:valueTo="100" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_stretch_y" />
+                        <TextView android:id="@+id/value_scale_y" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_scale_y"
+                        style="@style/CtrlSlider"
+                        android:value="20"
+                        android:valueFrom="0"
+                        android:valueTo="100" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_pos_x" />
+                        <TextView android:id="@+id/value_pos_x" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_pos_x"
+                        style="@style/CtrlSlider"
+                        android:value="50"
+                        android:valueFrom="0"
+                        android:valueTo="100" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_pos_y" />
+                        <TextView android:id="@+id/value_pos_y" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_pos_y"
+                        style="@style/CtrlSlider"
+                        android:value="50"
+                        android:valueFrom="0"
+                        android:valueTo="100" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_reset_layout"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:paddingHorizontal="8dp"
+                        android:text="@string/action_reset_layout"
+                        android:textSize="12sp" />
+
+                    <TextView style="@style/GroupHeader" android:text="@string/group_style" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_weight" />
+                        <TextView android:id="@+id/value_weight" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_weight"
+                        style="@style/CtrlSlider"
+                        android:stepSize="100"
+                        android:value="300"
+                        android:valueFrom="100"
+                        android:valueTo="900" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_opacity" />
+                        <TextView android:id="@+id/value_opacity" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_opacity"
+                        style="@style/CtrlSlider"
+                        android:value="100"
+                        android:valueFrom="10"
+                        android:valueTo="100" />
+
+                    <TextView style="@style/GroupHeader" android:text="@string/label_clock_color" />
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/color_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="2dp" />
+                    </HorizontalScrollView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_toggle_effects"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical|start"
+                        android:paddingHorizontal="8dp"
+                        android:text="@string/label_effects"
+                        android:textSize="13sp"
+                        app:icon="@drawable/ic_chevron_down"
+                        app:iconGravity="end"
+                        app:iconSize="20dp" />
+
+                    <LinearLayout
+                        android:id="@+id/content_effects"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switch_stroke"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="44dp"
+                            android:text="@string/label_stroke_enable"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp" />
+
+                        <LinearLayout style="@style/CtrlRow">
+                            <TextView style="@style/CtrlLabel" android:text="@string/label_stroke_width" />
+                            <TextView android:id="@+id/value_stroke_width" style="@style/CtrlValue" />
+                        </LinearLayout>
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/slider_stroke_width"
+                            style="@style/CtrlSlider"
+                            android:value="30"
+                            android:valueFrom="0"
+                            android:valueTo="100" />
+
+                        <TextView style="@style/GroupHeader" android:text="@string/label_stroke_color" />
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            android:scrollbars="none">
+
+                            <LinearLayout
+                                android:id="@+id/stroke_color_container"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="2dp" />
+                        </HorizontalScrollView>
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switch_gradient"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:minHeight="44dp"
+                            android:text="@string/label_gradient_enable"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp" />
+
+                        <TextView style="@style/GroupHeader" android:text="@string/label_gradient_top" />
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            android:scrollbars="none">
+
+                            <LinearLayout
+                                android:id="@+id/gradient_top_container"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="2dp" />
+                        </HorizontalScrollView>
+
+                        <TextView style="@style/GroupHeader" android:text="@string/label_gradient_bottom" />
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            android:scrollbars="none">
+
+                            <LinearLayout
+                                android:id="@+id/gradient_bottom_container"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="2dp" />
+                        </HorizontalScrollView>
+
+                        <LinearLayout style="@style/CtrlRow">
+                            <TextView style="@style/CtrlLabel" android:text="@string/label_gradient_bottom_alpha" />
+                            <TextView android:id="@+id/value_gradient_alpha" style="@style/CtrlValue" />
+                        </LinearLayout>
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/slider_gradient_bottom_alpha"
+                            style="@style/CtrlSlider"
+                            android:value="25"
+                            android:valueFrom="0"
+                            android:valueTo="100" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- ===== OBJECT ===== -->
+                <LinearLayout
+                    android:id="@+id/content_object"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView style="@style/GroupHeader" android:text="@string/group_image" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_pick_foreground"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="@string/action_pick_foreground"
+                        app:cornerRadius="14dp"
+                        app:icon="@drawable/ic_layers"
+                        app:iconGravity="textStart"
+                        app:iconSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/hint_foreground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/hint_object_controls"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- ===== BACKGROUND ===== -->
+                <LinearLayout
+                    android:id="@+id/content_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView style="@style/GroupHeader" android:text="@string/group_image" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_pick_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="@string/action_pick_background"
+                        app:cornerRadius="14dp"
+                        app:icon="@drawable/ic_image"
+                        app:iconGravity="textStart"
+                        app:iconSize="20dp" />
+
+                    <TextView style="@style/GroupHeader" android:text="@string/group_adjust" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_bg_zoom" />
+                        <TextView android:id="@+id/value_bg_scale" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_bg_scale"
+                        style="@style/CtrlSlider"
+                        android:value="0"
+                        android:valueFrom="0"
+                        android:valueTo="100" />
+
+                    <LinearLayout style="@style/CtrlRow">
+                        <TextView style="@style/CtrlLabel" android:text="@string/label_bg_blur" />
+                        <TextView android:id="@+id/value_bg_blur" style="@style/CtrlValue" />
+                    </LinearLayout>
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_bg_blur"
+                        style="@style/CtrlSlider"
+                        android:value="0"
+                        android:valueFrom="0"
+                        android:valueTo="100" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/label_bg_blur_hint"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/hint_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/hint_background_controls"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.example.depthwp.view.MaxHeightScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_set_wallpaper"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="14dp"
+            android:text="@string/action_set_home"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_wallpaper"
+            app:iconGravity="textStart"
+            app:iconSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_active_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="@color/text_tertiary"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,81 @@
+name: APK bauen und veroeffentlichen
+
+on:
+  push:
+    branches: [main]
+    # Der Job schreibt diese beiden Dateien selbst zurueck — sonst wuerde er sich endlos
+    # selbst neu ausloesen.
+    paths-ignore:
+      - 'depthwallpaper.apk'
+      - 'update.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Quellcode holen
+        uses: actions/checkout@v4
+
+      - name: Java einrichten
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Android SDK einrichten
+        uses: android-actions/setup-android@v3
+
+      - name: Versionsnummer bestimmen
+        run: |
+          # Die Lauf-Nummer steigt bei jedem Build, der Versatz haelt sie ueber allem,
+          # was bisher von Hand gebaut wurde.
+          echo "VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
+          echo "VERSION_NAME=1.$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
+
+      - name: Signatur-Schluessel bereitlegen
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::error::Das Repository-Geheimnis ANDROID_KEYSTORE_BASE64 fehlt."
+            echo "Ohne den urspruenglichen Schluessel liesse sich das Update nicht ueber die"
+            echo "bereits installierte App legen."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/signing.keystore"
+          echo "KEYSTORE_PATH=$RUNNER_TEMP/signing.keystore" >> $GITHUB_ENV
+
+      - name: Bauen
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: APK und update.json schreiben
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk depthwallpaper.apk
+          # jq baut das JSON, damit Anfuehrungszeichen und Umlaute aus der Commit-Nachricht
+          # die Datei nicht zerlegen.
+          jq -n \
+            --argjson versionCode "$VERSION_CODE" \
+            --arg versionName "$VERSION_NAME" \
+            --arg changelog "$(git log -1 --pretty=%s)" \
+            '{versionCode: $versionCode, versionName: $versionName, apkUrl: "depthwallpaper.apk", changelog: $changelog}' \
+            > update.json
+          cat update.json
+
+      - name: Zurueck ins Repository legen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add depthwallpaper.apk update.json
+          if git diff --staged --quiet; then
+            echo "Nichts veraendert."
+          else
+            git commit -m "Build $VERSION_NAME ($VERSION_CODE)"
+            git push
+          fi

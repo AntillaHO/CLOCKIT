@@ -1,0 +1,141 @@
+<resources>
+    <string name="app_name">DepthWallpaper</string>
+    <string name="wallpaper_description">Live Wallpaper mit Depth-Effekt: ein Objekt schwebt vor der Uhr.</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Meine Wallpaper</string>
+    <string name="dashboard_subtitle">Tippe auf ein Wallpaper für Optionen</string>
+    <plurals name="dashboard_count">
+        <item quantity="one">%1$d Wallpaper · tippen für Optionen</item>
+        <item quantity="other">%1$d Wallpaper · tippen für Optionen</item>
+    </plurals>
+    <string name="dashboard_empty_title">Noch nichts erstellt</string>
+    <string name="dashboard_empty_body">Erstelle dein erstes Wallpaper mit Uhr, Datum und Depth-Objekt.</string>
+    <string name="action_new_preset">Neu</string>
+    <string name="action_create_first">Erstes Wallpaper erstellen</string>
+    <string name="badge_active">Aktiv</string>
+    <string name="badge_active_lock">Sperre</string>
+    <string name="badge_active_home">Start</string>
+    <string name="action_edit">Bearbeiten</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_apply">Aktivieren</string>
+    <string name="default_preset_name">Wallpaper %d</string>
+    <string name="confirm_delete_title">Wallpaper löschen?</string>
+    <string name="confirm_delete_message">Dieses Wallpaper und seine Bilder werden endgültig entfernt.</string>
+    <string name="confirm_delete_yes">Löschen</string>
+    <string name="confirm_delete_no">Abbrechen</string>
+    <string name="toast_applied">Wallpaper aktiviert</string>
+    <string name="toast_deleted">Wallpaper gelöscht</string>
+    <string name="action_rename">Umbenennen</string>
+    <string name="rename_title">Name ändern</string>
+    <string name="rename_save">Speichern</string>
+
+    <!-- Editor chrome -->
+    <string name="action_back">Zurück</string>
+    <string name="tab_lock_screen">Sperrbildschirm</string>
+    <string name="tab_home_screen">Hauptbildschirm</string>
+    <string name="editor_screen_hint_lock">Du bearbeitest den Sperrbildschirm</string>
+    <string name="editor_screen_hint_home">Du bearbeitest den Hauptbildschirm</string>
+
+    <string name="action_pick_background">Hintergrundbild wählen</string>
+    <string name="action_pick_foreground">Objektbild wählen</string>
+    <string name="action_pick_background_short">Hintergrund</string>
+    <string name="action_pick_foreground_short">Objekt</string>
+    <string name="action_change_image">Bild ändern</string>
+    <string name="action_set_wallpaper">Als Wallpaper setzen</string>
+    <string name="action_set_lock">Sperrbildschirm festlegen</string>
+    <string name="action_set_home">Hauptbildschirm festlegen</string>
+    <string name="status_active_none">Noch nirgends festgelegt</string>
+    <string name="status_active_lock">Festgelegt für: Sperrbildschirm</string>
+    <string name="status_active_home">Festgelegt für: Hauptbildschirm</string>
+    <string name="status_active_both">Festgelegt für: Sperrbildschirm und Hauptbildschirm</string>
+    <string name="toast_set_lock">Sperrbildschirm festgelegt</string>
+    <string name="toast_set_home">Hauptbildschirm festgelegt</string>
+
+    <!-- Hints -->
+    <string name="hint_tap_to_edit">Element antippen zum Auswählen</string>
+    <string name="hint_time_selected">Uhrzeit gewählt · ziehen oder Slider nutzen</string>
+    <string name="hint_date_selected">Datum gewählt · ziehen oder Slider nutzen</string>
+    <string name="hint_object_selected">Objekt gewählt · ziehen oder Pinch</string>
+    <string name="hint_background_selected">Hintergrund · mit zwei Fingern zoomen</string>
+    <string name="label_bg_blur_hint">Wirkt auf Hintergrund und Objekt.</string>
+
+    <!-- Control groups -->
+    <string name="group_font">Schriftart</string>
+    <string name="group_layout">Größe &amp; Position</string>
+    <string name="group_style">Stil</string>
+    <string name="group_color">Farbe</string>
+    <string name="group_image">Bild</string>
+    <string name="group_adjust">Anpassen</string>
+
+    <string name="label_stretch_x">Breite (horizontal dehnen)</string>
+    <string name="label_stretch_y">Höhe (vertikal dehnen)</string>
+    <string name="label_pos_x">Position horizontal</string>
+    <string name="label_pos_y">Position vertikal</string>
+    <string name="action_reset_layout">Größe &amp; Position zurücksetzen</string>
+    <string name="show_time">Uhrzeit anzeigen</string>
+    <string name="show_date">Datum anzeigen</string>
+    <string name="action_lock_gestures">Verschieben sperren</string>
+    <string name="toast_gestures_locked">Verschieben gesperrt — Slider funktionieren weiter</string>
+    <string name="toast_gestures_unlocked">Verschieben entsperrt</string>
+
+    <string name="label_effects">Text-Effekte</string>
+    <string name="label_stroke_enable">Kontur</string>
+    <string name="label_stroke_width">Konturstärke</string>
+    <string name="label_stroke_color">Konturfarbe</string>
+    <string name="label_gradient_enable">Farbverlauf (Glossy)</string>
+    <string name="label_gradient_top">Verlauf oben</string>
+    <string name="label_gradient_bottom">Verlauf unten</string>
+    <string name="label_gradient_bottom_alpha">Transparenz unten</string>
+    <string name="label_clock_color">Textfarbe</string>
+
+    <string name="tab_time">Uhrzeit</string>
+    <string name="tab_date">Datum</string>
+    <string name="tab_object">Objekt</string>
+    <string name="tab_background">Hintergrund</string>
+
+    <string name="label_size">Größe</string>
+    <string name="label_weight">Schriftstärke</string>
+    <string name="label_opacity">Deckkraft</string>
+    <string name="label_bg_zoom">Zoom</string>
+    <string name="label_bg_blur">Weichzeichnen (gesamt)</string>
+    <string name="hint_object_controls">Objekt im Bild ziehen, mit zwei Fingern skalieren.</string>
+    <string name="hint_background_controls">Im Bild mit zwei Fingern zoomen.</string>
+    <string name="hint_no_background">Noch kein Hintergrundbild gewählt.</string>
+    <string name="hint_no_foreground">Noch kein Objektbild gewählt. Am besten ein freigestelltes PNG.</string>
+
+    <!-- Update -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_update_explain">Adresse der Datei „update.json" auf deiner NAS. Die App prüft dort, ob eine neuere Version bereitsteht.</string>
+    <string name="settings_url_hint">Update-Adresse (URL)</string>
+    <string name="settings_auth_optional">Zugangsdaten (nur falls der Ordner geschützt ist)</string>
+    <string name="settings_user_hint">Benutzername</string>
+    <string name="settings_password_hint">Passwort</string>
+    <string name="settings_auto_check">Beim Start automatisch prüfen</string>
+    <string name="settings_check_now">Jetzt nach Update suchen</string>
+    <string name="settings_save">Speichern</string>
+    <string name="settings_current_version">Installiert: Version %1$s (Code %2$d)</string>
+
+    <string name="update_available_title">Update verfügbar</string>
+    <string name="update_available_message">Version %1$s steht bereit.\n\n%2$s</string>
+    <string name="update_available_message_plain">Version %1$s steht bereit.</string>
+    <string name="update_install">Herunterladen &amp; installieren</string>
+    <string name="update_later">Später</string>
+    <string name="update_downloading">Lade Update … %1$d%%</string>
+    <string name="update_none">Kein Update verfügbar — du hast die neueste Version.</string>
+    <string name="update_failed">Update-Server nicht erreichbar. Adresse und Netzwerk prüfen.</string>
+    <string name="update_webpage_title">Adresse liefert eine Webseite</string>
+    <string name="update_webpage_message">Unter dieser Adresse liegt eine Download-Seite, nicht die Datei selbst.\n\nDie App braucht einen Link, der die Datei direkt ausliefert — etwa über WebDAV oder einen Web-Ordner auf der NAS. Freigabelinks des Datei-Managers funktionieren dafür meist nicht.</string>
+    <string name="update_bad_json">Datei gefunden, aber der Inhalt ist keine gültige update.json.</string>
+    <string name="update_download_failed">Download fehlgeschlagen.</string>
+    <string name="update_no_url">Zuerst eine Update-Adresse eintragen.</string>
+    <string name="update_permission_title">Berechtigung nötig</string>
+    <string name="update_permission_message">Damit sich die App selbst aktualisieren kann, musst du ihr einmalig erlauben, Apps zu installieren.</string>
+    <string name="update_permission_open">Einstellungen öffnen</string>
+
+    <!-- Errors -->
+    <string name="error_image_load">Bild konnte nicht geladen werden.</string>
+    <string name="error_permission_denied">Zugriff auf Fotos wird benötigt, um ein Bild auszuwählen.</string>
+    <string name="error_wallpaper_intent">Live Wallpaper konnte nicht geöffnet werden.</string>
+    <string name="info_wallpaper_saved">Einstellungen gespeichert.</string>
+</resources>

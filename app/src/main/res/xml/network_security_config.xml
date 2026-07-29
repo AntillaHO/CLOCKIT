@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--
+      A NAS on the local network typically serves plain HTTP, or HTTPS with a certificate that no
+      public authority vouches for. Android blocks both by default since Android 9.
+
+      Cleartext is permitted here because the update address is entered by the user at runtime and
+      can therefore not be pinned to a fixed hostname at build time. User-installed certificates are
+      trusted as well, so importing the NAS's own CA on the phone makes HTTPS work properly — the
+      better option if the NAS can offer it.
+    -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
