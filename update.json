@@ -1,6 +1,6 @@
 {
-  "versionCode": 102,
-  "versionName": "1.2",
+  "versionCode": 103,
+  "versionName": "1.3",
   "apkUrl": "depthwallpaper.apk",
-  "changelog": "Projektnotiz fuer kuenftige Sitzungen"
+  "changelog": "Dashboard: Action-Buttons vertikal untereinander anordnen"
 }
