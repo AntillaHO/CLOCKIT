@@ -1,6 +1,6 @@
 {
-  "versionCode": 103,
-  "versionName": "1.3",
+  "versionCode": 105,
+  "versionName": "1.5",
   "apkUrl": "depthwallpaper.apk",
-  "changelog": "Dashboard: Action-Buttons vertikal untereinander anordnen"
+  "changelog": "Create README.md"
 }
