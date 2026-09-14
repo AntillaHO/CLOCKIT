@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.depthwp"
+        applicationId = "com.clockit.studio"
         minSdk = 26
         targetSdk = 36
         // Die CI reicht bei jedem Lauf eine hoehere Nummer herein, damit jedes Update das
