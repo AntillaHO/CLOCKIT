@@ -1,0 +1,58 @@
+name: Sleep Compressor APK
+on:
+  push:
+    branches:
+      - sleep-compressor-apk
+    paths-ignore:
+      - 'sleep-compressor.apk'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Extract Android sources
+        run: |
+          base64 -d sleepcompressor_source.b64 > sleepcompressor-build-input.zip
+          unzip -q sleepcompressor-build-input.zip
+          test -f SleepCompressor/app/src/main/AndroidManifest.xml
+      - name: Install Android SDK platform
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-35" "build-tools;35.0.0"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Compile debug APK
+        run: gradle -p SleepCompressor :app:assembleDebug --no-daemon --stacktrace
+      - name: Validate APK and signature
+        run: |
+          cp SleepCompressor/app/build/outputs/apk/debug/app-debug.apk sleep-compressor.apk
+          unzip -t sleep-compressor.apk > /dev/null
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose sleep-compressor.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging sleep-compressor.apk | head -n 5
+          test -s sleep-compressor.apk
+          ls -lh sleep-compressor.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SleepCompressor-S23plus-APK
+          path: sleep-compressor.apk
+          if-no-files-found: error
+      - name: Publish direct APK file on build branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add sleep-compressor.apk
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish signed debug APK [skip ci]'
+            git push origin HEAD:sleep-compressor-apk
+          fi
